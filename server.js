@@ -10,6 +10,10 @@ var todos = [{
   description: 'Go Surfing',
   completed: false,
   id: 87689
+},{
+  description: 'Push First Commit',
+  completed: true,
+  id: 87690
 }];
 
 app.get('/', (req, res) => {
