@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/zacck/nodeTodo.git",
   "author": "zacck <coderv63@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
