@@ -1,5 +1,6 @@
 var express = require('express');
 var app  = express();
+var _ = require('underscore');
 var bodyParser = require('body-parser');
 const PORT = process.env.PORT  || 3000;
 var todos = [];
@@ -18,9 +19,9 @@ app.get('/todos', (req, res) => {
 });
 //GET /todos /:id
 app.get('/todos/:id', (req, res) => {
-  var thisTodo = todos.find((todo) => {
-    return todo.id == req.params.id;
-  })
+  var todoId = parseInt(req.params.id, 10)
+  var thisTodo = _.findWhere(todos, {id: todoId});
+  console.log(todoId);
   if(thisTodo != undefined) {
     res.send(thisTodo);
   } else {
