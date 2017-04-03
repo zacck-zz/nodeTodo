@@ -21,7 +21,6 @@ app.get('/todos', (req, res) => {
 app.get('/todos/:id', (req, res) => {
   var todoId = parseInt(req.params.id, 10)
   var thisTodo = _.findWhere(todos, {id: todoId});
-  console.log(todoId);
   if(thisTodo != undefined) {
     res.send(thisTodo);
   } else {
@@ -33,7 +32,9 @@ app.get('/todos/:id', (req, res) => {
 app.post('/todos', (req, res) => {
   //use body parser middleware to consume some json
   var body = req.body;
-  console.log('description: ', body.description);
+  if (!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
+    return res.status(400).send()
+  }
   todos.push({
     id: todoNextId,
     description: body.description,
