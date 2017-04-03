@@ -2,20 +2,6 @@ var express = require('express');
 var app  = express();
 const PORT = process.env.PORT  || 3000;
 
-var todos = [{
-  description: 'Task we want to get done',
-  completed: false,
-  id: 87686
-},{
-  description: 'Go Surfing',
-  completed: false,
-  id: 87689
-},{
-  description: 'Push First Commit',
-  completed: true,
-  id: 87690
-}];
-
 app.get('/', (req, res) => {
   res.send('Todo Api Root');
 });
@@ -26,7 +12,15 @@ app.get('/todos', (req, res) => {
 })
 //GET /todos /:id
 app.get('/todos/:id', (req, res) => {
-  res.send(todos[req.params.id]);
+  var thisTodo = todos.find((todo) => {
+    return todo.id == req.params.id;
+  })
+  if(thisTodo != undefined) {
+    res.send(thisTodo);
+  } else {
+    res.status(404).send('Wow We dont have that todo');
+  }
+
 })
 
 
