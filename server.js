@@ -33,7 +33,7 @@ app.post('/todos', (req, res) => {
   //use body parser middleware to consume some json
   var body = req.body;
   if (!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
-    return res.status(400).send()
+    return res.status(400).send();
   }
   todos.push({
     id: todoNextId,
@@ -44,6 +44,20 @@ app.post('/todos', (req, res) => {
 
   res.json(body);
 });
+
+//http delete
+app.delete('/todos/:id', (req, res) => {
+  var todoId = parseInt(req.params.id);
+  var matchedTodo = _.findWhere(todos, {id: todoId});
+  if(!matchedTodo) {
+    res.status(404).send();
+  } else  {
+    todos = todos.filter((todo) => {
+      return todo.id != todoId
+    });
+    res.send(`${matchedTodo.description} Deleted!`)
+  }
+})
 
 
 app.listen(PORT, () => {
