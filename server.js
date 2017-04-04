@@ -50,7 +50,7 @@ app.delete('/todos/:id', (req, res) => {
   var todoId = parseInt(req.params.id);
   var matchedTodo = _.findWhere(todos, {id: todoId});
   if(!matchedTodo) {
-    res.status(404).send();
+    res.status(404).send({"error":`No todo with id ${todoId}`});
   } else  {
     todos = todos.filter((todo) => {
       return todo.id != todoId
