@@ -49,13 +49,35 @@ app.post('/todos', (req, res) => {
 app.delete('/todos/:id', (req, res) => {
   var todoId = parseInt(req.params.id);
   var matchedTodo = _.findWhere(todos, {id: todoId});
-  if(!matchedTodo) {
+  if(!matchedTodo || todoId == undefined) {
     res.status(404).send({"error":`No todo with id ${todoId}`});
   } else  {
     todos = todos.filter((todo) => {
       return todo.id != todoId
     });
     res.send(`${matchedTodo.description} Deleted!`)
+  }
+});
+
+//http update
+app.put('/todos/:id', (req, res) => {
+  var body = req.body;
+  var todoId = parseInt(req.params.id);
+  var matchedTodo = _.findWhere(todos, {id: todoId});
+  if(!matchedTodo || todoId == undefined) {
+    res.status(404).send({"error":`No todo with id ${todoId}`});
+  } else if (!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
+    todos = todos.map((todo) => {
+      if(todo.id == todoId) {
+        return {
+          id: todoId,
+          description: body.description,
+          completed: body.completed
+        }
+      } else {
+        return todo;
+      }
+    })
   }
 })
 
