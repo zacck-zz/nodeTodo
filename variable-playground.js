@@ -23,6 +23,8 @@ var grades = [15,37];
 
 //takes in the array and the grade to add
 function addGrade(grades) {
+  debugger; //this tells node to stop at a point  in time with the variables as they are
+  //the debugger always stops at a point and will wait a for a command to contibue with exectution.
   //push a grade into the array
   //arr.push(gr);
   //assign new value
