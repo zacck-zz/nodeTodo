@@ -13,9 +13,21 @@ app.get('/', (req, res) => {
   res.send('Todo Api Root');
 });
 
-//GET /todos
+//GET /todos?completed=true
 app.get('/todos', (req, res) => {
-  res.send(todos);
+  //use query params
+  var queryPars = req.query;
+  var filteredTodos =  todos;
+
+  //check if query params found
+  if(queryPars.hasOwnProperty('completed')) {
+    var bool =  false;
+    if(queryPars.completed === 'true') {
+      bool = true;
+    }
+    filteredTodos = _.where(filteredTodos, {completed: bool});
+  }
+  res.send(filteredTodos);
 });
 //GET /todos /:id
 app.get('/todos/:id', (req, res) => {
